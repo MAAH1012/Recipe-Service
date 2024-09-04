@@ -1,0 +1,5 @@
+package com.maahi.recipe.model;
+
+public class User {
+
+}

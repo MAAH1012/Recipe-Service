@@ -1,0 +1,79 @@
+package com.maahi.recipe.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.maahi.recipe.model.AuthRequest;
+import com.maahi.recipe.model.Employee;
+import com.maahi.recipe.model.Recipe;
+import com.maahi.recipe.model.User;
+import com.maahi.recipe.repository.EmployeeRepository;
+import com.maahi.recipe.repository.RecipeRepository;
+import com.maahi.recipe.repository.UserRepository;
+import com.maahi.recipe.utils.PasswordEncoderUtils;
+
+@RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RequestMapping("/api/v1")
+public class RecipeController {
+	
+	@Autowired
+	private EmployeeRepository employeeRepostory;
+	
+	@Autowired
+	private RecipeRepository recipeRepository;
+	
+	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
+	private PasswordEncoderUtils pass;
+	
+	//get all employees
+	
+	@GetMapping("/employees")
+	public List<Employee> getAllEmployees(){
+		return employeeRepostory.findAll();
+	}
+	
+//	@PostMapping("/employees")
+//	public Employee createEmployee(@RequestBody Employee recipe) {
+//		return employeeRepostory.save(recipe);
+//	}
+	
+//	@PostMapping("/login")
+//	public String login(@RequestBody AuthRequest authrequest) {
+//		
+//	}
+	
+	@PostMapping("/register")
+	public void register(@RequestBody AuthRequest authrequest) {
+		User user = new User();
+		user.setUserName(authrequest.getUserName());
+		user.setPassword(pass.encode(authrequest.getPassWord()));
+		user.setRole("USER");
+		userRepository.save(user);
+	}
+	
+	@PostMapping("/recipes")
+	public void createRecipe(@RequestBody List<Recipe> recipe) {
+		Recipe r = new Recipe();
+	recipeRepository.saveAll(recipe);
+	}
+	
+
+	@GetMapping("/recipes")
+	public List<Recipe> getAllRecipes(){
+		List<Recipe> list = recipeRepository.findAll();
+		return list;
+	}
+	
+
+}

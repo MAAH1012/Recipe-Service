@@ -1,0 +1,5 @@
+package com.maahi.recipe.repository;
+
+public class UserRepository {
+
+}

@@ -1,0 +1,5 @@
+package com.maahi.recipe.service;
+
+public class UserServiceImpl {
+
+}
