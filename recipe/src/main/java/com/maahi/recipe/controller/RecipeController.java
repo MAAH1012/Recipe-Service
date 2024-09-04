@@ -123,7 +123,7 @@ public class RecipeController {
 		if (recipe.isPresent()) {
 	        recipeRepository.delete(recipe.get());
 	    } else {
-	        throw new ResourceNotFoundException("Recipe with ID " + id + " not found");
+	        throw new ResourceNotFoundException("Recipes with ID " + id + " not found");
 	    }
 		List<Recipe> list = getAllRecipes();
 		return list;
